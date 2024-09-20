@@ -102,15 +102,13 @@ a valid value without throwing errors, or until the timeout is reached.
 import { retry } from "@mcastiello/time-functions";
 import { API_ENDPOINT } from "./constants";
 
-const makeRequest = retry(async (url: string): { valid: boolean } => {
+const makeRequest = retry(async (url: string): Promise<{ valid: boolean }> => {
   const response = await fetch(url);
-  
   return await response.json();
-  
 }, {
   delay: 250,
   timeout: 5000,
-  validate: (result: { valid: boolean }) => result.valid
+  validate: (result) => result.valid
 });
 
 try {
