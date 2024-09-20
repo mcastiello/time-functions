@@ -32,31 +32,6 @@ debounced();
 // Hello World!
 // Hello World!
 ```
-### `debounce`
-
-Delay the execution of a function. If while waiting for the execution,
-the function is called again, the previous call is cancelled and
-delay is reset. The function will not be executed until the delay
-is successfully completed without any rest.
-
-```ts
-import { debounce, sleep } from "@mcastiello/time-functions";
-
-const myFunction = () => console.log("Hello World!");
-
-const debounced = debounce(myFunction, 20);
-
-debounced();
-debounced();
-debounced();
-
-await sleep(50);
-// Hello World!
-
-debounced();
-
-// Hello World!
-```
 
 ### `throttle`
 
