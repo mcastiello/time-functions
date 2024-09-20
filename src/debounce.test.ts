@@ -5,10 +5,14 @@ describe("debounce", () => {
   const mock = (value: number) => {
     if (!isNaN(value)) return null;
   };
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
   test("it executes the function after a delay", () => {
     const callback = jest.fn(mock);
-
-    jest.useFakeTimers();
 
     const debounced = debounce(callback, 250);
 
@@ -19,13 +23,9 @@ describe("debounce", () => {
     jest.advanceTimersByTime(250);
 
     expect(callback).toHaveBeenCalled();
-
-    jest.useRealTimers();
   });
   test("it restarts the delay after each call", () => {
     const callback = jest.fn(mock);
-
-    jest.useFakeTimers();
 
     const debounced = debounce(callback, 200);
 
@@ -46,13 +46,9 @@ describe("debounce", () => {
     jest.advanceTimersByTime(100);
 
     expect(callback).toHaveBeenCalledWith(2);
-
-    jest.useRealTimers();
   });
   test("it triggers the callback with all the parameters ever passed", () => {
     const callback = jest.fn(mock);
-
-    jest.useFakeTimers();
 
     const debounced = debounce(callback, { delay: 200, behaviour: TimingFunctionsParamsBehaviour.Queue });
 
@@ -69,13 +65,9 @@ describe("debounce", () => {
     jest.advanceTimersByTime(200);
 
     expect(callback).toHaveBeenCalledWith(2, 1);
-
-    jest.useRealTimers();
   });
   test("it triggers the callback with aggregated parameters", () => {
     const callback = jest.fn(mock);
-
-    jest.useFakeTimers();
 
     const debounced = debounce(callback, {
       delay: 200,
@@ -96,7 +88,5 @@ describe("debounce", () => {
     jest.advanceTimersByTime(200);
 
     expect(callback).toHaveBeenCalledWith(3);
-
-    jest.useRealTimers();
   });
 });
